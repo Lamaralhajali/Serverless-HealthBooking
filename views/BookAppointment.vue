@@ -47,7 +47,7 @@ export default {
     };
   },
   mounted() {
-    fetch("hhttps://0appkmpedd.execute-api.us-east-1.amazonaws.com/prod/Slots")
+    fetch("https://0appkmpedd.execute-api.us-east-1.amazonaws.com/prod/Slots")
       .then(res => res.json())
       .then(data => {
         const parsed = JSON.parse(data.body);
