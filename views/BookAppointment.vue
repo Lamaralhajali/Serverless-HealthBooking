@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <nav class="navbar navbar-light bg-white shadow-sm mb-4">
@@ -50,8 +49,13 @@ export default {
     fetch("https://0appkmpedd.execute-api.us-east-1.amazonaws.com/prod/Slots")
       .then(res => res.json())
       .then(data => {
-        const parsed = JSON.parse(data.body);
-        this.slots = parsed.filter(s => !s.isBooked).map(s => s.slot);
+        // Parse the 'body' string from Lambda Proxy response
+        const parsedSlots = JSON.parse(data.body);
+        // Filter and map slots to strings
+        this.slots = parsedSlots.filter(s => !s.isBooked).map(s => s.slot);
+      })
+      .catch(err => {
+        console.error("Error fetching slots:", err);
       });
   },
   methods: {
@@ -65,19 +69,20 @@ export default {
       fetch("https://0appkmpedd.execute-api.us-east-1.amazonaws.com/prod/Appointments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // Wrap payload inside 'body' key as your backend expects
         body: JSON.stringify({ body: JSON.stringify(payload) })
       })
-        .then(res => res.json())
-        .then(() => {
-          alert("Appointment booked!");
-          this.name = "";
-          this.symptoms = "";
-          this.selectedSlot = "";
-        })
-        .catch(err => {
-          console.error("Error booking appointment:", err);
-          alert("Failed to book appointment.");
-        });
+      .then(res => res.json())
+      .then(() => {
+        alert("Appointment booked!");
+        this.name = "";
+        this.symptoms = "";
+        this.selectedSlot = "";
+      })
+      .catch(err => {
+        console.error("Error booking appointment:", err);
+        alert("Failed to book appointment.");
+      });
     }
   }
 };
