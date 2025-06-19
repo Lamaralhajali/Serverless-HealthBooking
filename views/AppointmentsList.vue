@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <nav class="navbar navbar-light bg-white shadow-sm mb-4">
@@ -31,7 +30,11 @@
                 <td>{{ appointment.slot }}</td>
                 <td>{{ appointment.status }}</td>
                 <td>
-                  <select class="form-select" :value="appointment.status" @change="e => updateStatus(appointment, e.target.value)">
+                  <select
+                    class="form-select"
+                    :value="appointment.status"
+                    @change="e => updateStatus(appointment, e.target.value)"
+                  >
                     <option>Pending</option>
                     <option>In Progress</option>
                     <option>Completed</option>
@@ -67,44 +70,29 @@ export default {
         });
     },
     updateStatus(appointment, newStatus) {
-      // Log the full appointment object and its ID
-      console.log(" appointment (proxy):", appointment);
-      const cleanAppointment = JSON.parse(JSON.stringify(appointment));
-      console.log(" Clean appointment:", cleanAppointment);
-      console.log("appointmentId:", cleanAppointment.appointmentId);
-      console.log(" appointmentId (direct):", appointment.appointmentId);
-
       const url = `https://4tex8oq344.execute-api.us-east-1.amazonaws.com/prod/Appointments/${appointment.appointmentId}`;
-
 
       const payload = { status: newStatus };
 
       fetch(url, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       })
-          .then(async res => {
-
-            const rawBody = await res.text();
-
-            if (!res.ok) {
-              throw new Error(`HTTP ${res.status}: ${rawBody}`);
-            }
-
-            return JSON.parse(rawBody);
-          })
-          .then(() => {
-            alert("Status updated!");
-          })
-          .catch(err => {
-            console.error(" Failed to update status:", err);
-            alert("Update failed. See console for details.");
-          });
+        .then(async res => {
+          const rawBody = await res.text();
+          if (!res.ok) throw new Error(`HTTP ${res.status}: ${rawBody}`);
+          return JSON.parse(rawBody);
+        })
+        .then(() => {
+          alert("Status updated!");
+          this.fetchAppointments(); // Reload appointments to update UI
+        })
+        .catch(err => {
+          console.error(" Failed to update status:", err);
+          alert("Update failed. See console for details.");
+        });
     }
-
-     }
+  }
 };
 </script>
