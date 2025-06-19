@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     fetchAppointments() {
-      fetch("https://0appkmpedd.execute-api.us-east-1.amazonaws.com/prod/Appointments")
+      fetch("https://4tex8oq344.execute-api.us-east-1.amazonaws.com/prod/Appointments")
         .then(res => res.json())
         .then(data => {
           const parsed = JSON.parse(data.body);
@@ -74,7 +74,7 @@ export default {
       console.log("appointmentId:", cleanAppointment.appointmentId);
       console.log(" appointmentId (direct):", appointment.appointmentId);
 
-      const url = `https://0appkmpedd.execute-api.us-east-1.amazonaws.com/prod/Appointments/{appointmentId}`;
+      const url = `https://4tex8oq344.execute-api.us-east-1.amazonaws.com/prod/Appointments/{appointmentId}`;
 
       const payload = { status: newStatus };
 
