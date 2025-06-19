@@ -46,7 +46,7 @@ export default {
     };
   },
   mounted() {
-    fetch("https://0appkmpedd.execute-api.us-east-1.amazonaws.com/prod/Slots")
+    fetch("https://qr4b4hk4b9.execute-api.us-east-1.amazonaws.com/tesssst/slots")
       .then(res => res.json())
       .then(data => {
         // Parse the 'body' string from Lambda Proxy response
