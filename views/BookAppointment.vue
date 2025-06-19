@@ -46,7 +46,7 @@ export default {
     };
   },
   mounted() {
-    fetch("https://qr4b4hk4b9.execute-api.us-east-1.amazonaws.com/tesssst/slots")
+    fetch("https://4tex8oq344.execute-api.us-east-1.amazonaws.com/prod/Slots")
       .then(res => res.json())
       .then(data => {
         // Parse the 'body' string from Lambda Proxy response
@@ -66,7 +66,7 @@ export default {
         slot: this.selectedSlot
       };
 
-      fetch("https://0appkmpedd.execute-api.us-east-1.amazonaws.com/prod/Appointments", {
+      fetch("https://4tex8oq344.execute-api.us-east-1.amazonaws.com/prod/Appointments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // Wrap payload inside 'body' key as your backend expects
